@@ -27,6 +27,11 @@ namespace evony_manager.Common
             activeDevice = strDeviceID;
         }
 
+        public static void DisConnect(string strDeviceID)
+        {
+            activeDevice = "";
+        }
+
         public static string Command(string strCommand)
         {
             return ExecuteAdbCommand(strCommand);
