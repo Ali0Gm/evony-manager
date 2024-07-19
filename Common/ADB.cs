@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.IO;
-using System.Threading.Tasks;
+﻿using System.Diagnostics;
 
 namespace evony_manager.Common
 {
@@ -53,7 +49,7 @@ namespace evony_manager.Common
             return devices;
         }
 
-        public static Bitmap CaptureScreenshot()
+        public static Bitmap? CaptureScreenshot()
         {
             Process process = new Process();
             process.StartInfo.FileName = adbPath;
