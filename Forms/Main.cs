@@ -5,24 +5,28 @@ namespace evony_manager.Forms
 {
     public partial class Main : Form
     {
-        Bitmap aaPng;
-
         public Main()
         {
             InitializeComponent();
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void btnRun_Click(object sender, EventArgs e)
         {
-            aaPng = new Bitmap("aa.png");
             Common.ADB.Connect("127.0.0.1:5555");
-            timerMonitor.Start();
+
+            var image = Common.ADB.CaptureScreenshot();
+
+            if (image != null)
+                timerMonitor.Start();
+            else
+                Console_Write("App Not Found!");
+
         }
 
 
         void Console_Write(string text)
         {
-            textBox1.AppendText(text);
+            logText.AppendText(text + Environment.NewLine);
         }
 
         private void timerMonitor_Tick(object sender, EventArgs e)

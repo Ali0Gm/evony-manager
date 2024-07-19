@@ -29,31 +29,31 @@
         private void InitializeComponent()
         {
             components = new System.ComponentModel.Container();
-            button1 = new Button();
-            textBox1 = new TextBox();
+            btnRun = new Button();
+            logText = new TextBox();
             picDeviceMonitor = new PictureBox();
             timerMonitor = new System.Windows.Forms.Timer(components);
             ((System.ComponentModel.ISupportInitialize)picDeviceMonitor).BeginInit();
             SuspendLayout();
             // 
-            // button1
+            // btnRun
             // 
-            button1.Location = new Point(890, 378);
-            button1.Name = "button1";
-            button1.Size = new Size(75, 23);
-            button1.TabIndex = 0;
-            button1.Text = "button1";
-            button1.UseVisualStyleBackColor = true;
-            button1.Click += button1_Click;
+            btnRun.Location = new Point(890, 378);
+            btnRun.Name = "btnRun";
+            btnRun.Size = new Size(75, 23);
+            btnRun.TabIndex = 0;
+            btnRun.Text = "Run";
+            btnRun.UseVisualStyleBackColor = true;
+            btnRun.Click += btnRun_Click;
             // 
-            // textBox1
+            // logText
             // 
-            textBox1.Location = new Point(700, 12);
-            textBox1.Multiline = true;
-            textBox1.Name = "textBox1";
-            textBox1.ScrollBars = ScrollBars.Both;
-            textBox1.Size = new Size(265, 205);
-            textBox1.TabIndex = 1;
+            logText.Location = new Point(700, 12);
+            logText.Multiline = true;
+            logText.Name = "logText";
+            logText.ScrollBars = ScrollBars.Both;
+            logText.Size = new Size(265, 205);
+            logText.TabIndex = 1;
             // 
             // picDeviceMonitor
             // 
@@ -76,8 +76,8 @@
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(977, 413);
             Controls.Add(picDeviceMonitor);
-            Controls.Add(textBox1);
-            Controls.Add(button1);
+            Controls.Add(logText);
+            Controls.Add(btnRun);
             Name = "Main";
             Text = "Main";
             ((System.ComponentModel.ISupportInitialize)picDeviceMonitor).EndInit();
@@ -87,8 +87,8 @@
 
         #endregion
 
-        private Button button1;
-        private TextBox textBox1;
+        private Button btnRun;
+        private TextBox logText;
         private PictureBox picDeviceMonitor;
         private System.Windows.Forms.Timer timerMonitor;
     }
