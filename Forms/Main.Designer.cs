@@ -28,9 +28,11 @@
         /// </summary>
         private void InitializeComponent()
         {
+            components = new System.ComponentModel.Container();
             button1 = new Button();
             textBox1 = new TextBox();
             picDeviceMonitor = new PictureBox();
+            timerMonitor = new System.Windows.Forms.Timer(components);
             ((System.ComponentModel.ISupportInitialize)picDeviceMonitor).BeginInit();
             SuspendLayout();
             // 
@@ -62,6 +64,11 @@
             picDeviceMonitor.TabIndex = 2;
             picDeviceMonitor.TabStop = false;
             // 
+            // timerMonitor
+            // 
+            timerMonitor.Interval = 500;
+            timerMonitor.Tick += timerMonitor_Tick;
+            // 
             // Main
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -82,5 +89,6 @@
         private Button button1;
         private TextBox textBox1;
         private PictureBox picDeviceMonitor;
+        private System.Windows.Forms.Timer timerMonitor;
     }
 }

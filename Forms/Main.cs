@@ -8,7 +8,10 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using OpenCvSharp;
+using OpenCvSharp.Extensions;
 using System.Diagnostics;
+using evony_manager.Common;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace evony_manager.Forms
 {
@@ -21,54 +24,33 @@ namespace evony_manager.Forms
 
         private void button1_Click(object sender, EventArgs e)
         {
-            var process = new System.Diagnostics.Process();
-            var start = new System.Diagnostics.ProcessStartInfo()
-            {
-                UseShellExecute = false,
-                RedirectStandardOutput = true,
-                FileName = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "adb", "adb.exe"),
-                Arguments = "-s 127.0.0.1:5555 shell screencap -p"
-            };
-            process.StartInfo = start;
-            process.Start();
-            var stream = process.StandardOutput.BaseStream;
-            List<byte> data = new List<byte>(1024);
-
-            int read = 0;
-            bool isCR = false;
-            do
-            {
-                byte[] buf = new byte[1024];
-                read = stream.Read(buf, 0, buf.Length);
-
-                for (int i = 0; i < read; i++) //convert CRLF to LF 
-                {
-                    if (isCR && buf[i] == 0x0A)
-                    {
-                        isCR = false;
-                        data.RemoveAt(data.Count - 1);
-                        data.Add(buf[i]);
-                        continue;
-                    }
-                    isCR = buf[i] == 0x0D;
-                    data.Add(buf[i]);
-                }
-            }
-            while (read > 0);
-
-            if (data.Count == 0)
-            {
-                Console_Write("fail");
-                return;
-            }
-
-            picDeviceMonitor.Image = new System.Drawing.Bitmap(new MemoryStream(data.ToArray()));
+            Common.ADB.Connect("127.0.0.1:5555");
+            timerMonitor.Start();
         }
-    
+
 
         void Console_Write(string text)
         {
             textBox1.AppendText(text);
+        }
+
+        private void timerMonitor_Tick(object sender, EventArgs e)
+        {
+            Mat src = Common.ADB.CaptureScreenshot().ToMat();
+
+            Mat gray = new Mat();
+            Cv2.CvtColor(src, gray, ColorConversionCodes.BGR2GRAY);
+
+            Mat edges = new Mat();
+            Cv2.Canny(gray, edges, 100, 200);
+
+            Bitmap processedBitmap = BitmapConverter.ToBitmap(edges);
+
+            picDeviceMonitor.Image = processedBitmap;
+
+            src.Dispose();
+            gray.Dispose();
+            edges.Dispose();
         }
     }
 }

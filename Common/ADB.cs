@@ -13,14 +13,22 @@ namespace evony_manager.Common
 
         public static void Connect(string strDeviceID)
         {
-            ExecuteAdbCommand($"connect {strDeviceID}");
-            activeDevice = strDeviceID;
-        }
+            //Process.Start("cmd.exe", "/c taskkill /F /IM adb.exe");
+            //Thread.Sleep(1500);
+            //Application.DoEvents();
 
-        public static void Disconnect(string strDeviceID)
-        {
-            ExecuteAdbCommand($"disconnect {strDeviceID}");
-            activeDevice = "";
+            Process process = new Process();
+            process.StartInfo.FileName = adbPath;
+            process.StartInfo.Arguments = $"connect {strDeviceID}";
+            process.StartInfo.RedirectStandardOutput = true;
+            process.StartInfo.UseShellExecute = false;
+            process.StartInfo.CreateNoWindow = true;
+
+            process.Start();
+            string result = process.StandardOutput.ReadToEnd();
+            process.WaitForExit();
+
+            activeDevice = strDeviceID;
         }
 
         public static string Command(string strCommand)
@@ -45,9 +53,48 @@ namespace evony_manager.Common
             return devices;
         }
 
-        public static byte[] CaptureScreenshot()
+        public static Bitmap CaptureScreenshot()
         {
-            return ExecuteAdbCommandForBinary("shell screencap -p");
+            Process process = new Process();
+            process.StartInfo.FileName = adbPath;
+            process.StartInfo.Arguments = $"-s {activeDevice} shell screencap -p";
+            process.StartInfo.RedirectStandardOutput = true;
+            process.StartInfo.UseShellExecute = false;
+            process.StartInfo.CreateNoWindow = true;
+
+            process.Start();
+            var stream = process.StandardOutput.BaseStream;
+
+            List<byte> data = new List<byte>(1024);
+
+            int read = 0;
+            bool isCR = false;
+            do
+            {
+                byte[] buf = new byte[1024];
+                read = stream.Read(buf, 0, buf.Length);
+
+                for (int i = 0; i < read; i++)
+                {
+                    if (isCR && buf[i] == 0x0A)
+                    {
+                        isCR = false;
+                        data.RemoveAt(data.Count - 1);
+                        data.Add(buf[i]);
+                        continue;
+                    }
+                    isCR = buf[i] == 0x0D;
+                    data.Add(buf[i]);
+                }
+            }
+            while (read > 0);
+
+            if (data.Count == 0)
+            {
+                return null;
+            }
+
+            return new System.Drawing.Bitmap(new MemoryStream(data.ToArray()));
         }
 
         private static string ExecuteAdbCommand(string command)
@@ -64,24 +111,6 @@ namespace evony_manager.Common
             process.WaitForExit();
 
             return result;
-        }
-
-        private static byte[] ExecuteAdbCommandForBinary(string command)
-        {
-            Process process = new Process();
-            process.StartInfo.FileName = adbPath;
-            process.StartInfo.Arguments = $"-s {activeDevice} {command}";
-            process.StartInfo.RedirectStandardOutput = true;
-            process.StartInfo.UseShellExecute = false;
-            process.StartInfo.CreateNoWindow = true;
-
-            process.Start();
-            using (var ms = new MemoryStream())
-            {
-                process.StandardOutput.BaseStream.CopyTo(ms);
-                process.WaitForExit();
-                return ms.ToArray();
-            }
         }
     }
 }
