@@ -1,22 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using OpenCvSharp;
+﻿using OpenCvSharp;
 using OpenCvSharp.Extensions;
-using System.Diagnostics;
-using evony_manager.Common;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace evony_manager.Forms
 {
     public partial class Main : Form
     {
+        Bitmap aaPng;
+
         public Main()
         {
             InitializeComponent();
@@ -24,6 +14,7 @@ namespace evony_manager.Forms
 
         private void button1_Click(object sender, EventArgs e)
         {
+            aaPng = new Bitmap("aa.png");
             Common.ADB.Connect("127.0.0.1:5555");
             timerMonitor.Start();
         }

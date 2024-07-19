@@ -57,9 +57,10 @@
             // 
             // picDeviceMonitor
             // 
-            picDeviceMonitor.Location = new Point(12, 12);
+            picDeviceMonitor.Dock = DockStyle.Left;
+            picDeviceMonitor.Location = new Point(0, 0);
             picDeviceMonitor.Name = "picDeviceMonitor";
-            picDeviceMonitor.Size = new Size(682, 393);
+            picDeviceMonitor.Size = new Size(682, 413);
             picDeviceMonitor.SizeMode = PictureBoxSizeMode.Zoom;
             picDeviceMonitor.TabIndex = 2;
             picDeviceMonitor.TabStop = false;
