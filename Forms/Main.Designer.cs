@@ -28,10 +28,8 @@
         /// </summary>
         private void InitializeComponent()
         {
-            components = new System.ComponentModel.Container();
             button1 = new Button();
             textBox1 = new TextBox();
-            timer = new System.Windows.Forms.Timer(components);
             picDeviceMonitor = new PictureBox();
             ((System.ComponentModel.ISupportInitialize)picDeviceMonitor).BeginInit();
             SuspendLayout();
@@ -54,11 +52,6 @@
             textBox1.ScrollBars = ScrollBars.Both;
             textBox1.Size = new Size(605, 307);
             textBox1.TabIndex = 1;
-            // 
-            // timer
-            // 
-            timer.Interval = 1000;
-            timer.Tick += timer_Tick;
             // 
             // picDeviceMonitor
             // 
@@ -87,7 +80,6 @@
 
         private Button button1;
         private TextBox textBox1;
-        private System.Windows.Forms.Timer timer;
         private PictureBox picDeviceMonitor;
     }
 }
