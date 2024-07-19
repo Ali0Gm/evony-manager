@@ -36,7 +36,7 @@
             // 
             // button1
             // 
-            button1.Location = new Point(713, 415);
+            button1.Location = new Point(890, 378);
             button1.Name = "button1";
             button1.Size = new Size(75, 23);
             button1.TabIndex = 0;
@@ -46,18 +46,19 @@
             // 
             // textBox1
             // 
-            textBox1.Location = new Point(12, 12);
+            textBox1.Location = new Point(700, 12);
             textBox1.Multiline = true;
             textBox1.Name = "textBox1";
             textBox1.ScrollBars = ScrollBars.Both;
-            textBox1.Size = new Size(605, 307);
+            textBox1.Size = new Size(265, 205);
             textBox1.TabIndex = 1;
             // 
             // picDeviceMonitor
             // 
-            picDeviceMonitor.Location = new Point(623, 12);
+            picDeviceMonitor.Location = new Point(12, 12);
             picDeviceMonitor.Name = "picDeviceMonitor";
-            picDeviceMonitor.Size = new Size(165, 307);
+            picDeviceMonitor.Size = new Size(682, 393);
+            picDeviceMonitor.SizeMode = PictureBoxSizeMode.Zoom;
             picDeviceMonitor.TabIndex = 2;
             picDeviceMonitor.TabStop = false;
             // 
@@ -65,7 +66,7 @@
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(800, 450);
+            ClientSize = new Size(977, 413);
             Controls.Add(picDeviceMonitor);
             Controls.Add(textBox1);
             Controls.Add(button1);
